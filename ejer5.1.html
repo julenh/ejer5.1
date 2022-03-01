@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+	</head>
+	<body>
+		<script>
+			var valor;
+			var respuesta1;
+			var respuesta2;
+			var respuesta3;
+			var respuesta4;
+			var respuesta5;
+			var respuestas = [];
+
+			var elemento;
+
+			function inic(){
+				var direccion1 = "https://openlibrary.org/api/books?bibkeys=ISBN:9781491920497&jscmd=details&format=json";
+				var direccion2 = "https://openlibrary.org/api/books?bibkeys=ISBN:1491910399&jscmd=details&format=json";
+				var direccion3 = "https://openlibrary.org/api/books?bibkeys=ISBN:1491946008&jscmd=details&format=json";
+				var direccion4 = "https://openlibrary.org/api/books?bibkeys=ISBN:1491978236&jscmd=details&format=json";
+				var direccion5 = "https://openlibrary.org/api/books?bibkeys=ISBN:9781491906187&jscmd=details&format=json";
+
+
+				var consulta = new XMLHttpRequest();
+				consulta.open("GET", direccion1);
+				consulta.send();
+				consulta.onload = function(){
+					if(consulta.status == 200){
+						console.log("consulta ejecutada con exito");
+						console.log(consulta.responseText);
+						respuesta1 = JSON.parse(consulta.responseText);
+					}
+				}
+
+				var consulta2 = new XMLHttpRequest();
+				consulta2.open("GET", direccion2);
+				consulta2.send();
+				consulta2.onload = function(){
+					if(consulta2.status == 200){
+						console.log("consulta2 ejecutada con exito");
+						console.log(consulta2.responseText);
+						respuesta2 = JSON.parse(consulta2.responseText);
+					}
+				}
+
+
+				var consulta3 = new XMLHttpRequest();
+				consulta3.open("GET", direccion3);
+				consulta3.send();
+				consulta3.onload = function(){
+					if(consulta3.status == 200){
+						console.log("consulta3 ejecutada con exito");
+						console.log(consulta3.responseText);
+					}
+				}
+				respuesta3 = consulta3.responseText;
+
+				var consulta4 = new XMLHttpRequest();
+				consulta4.open("GET", direccion4);
+				consulta4.send();
+				consulta4.onload = function(){
+					if(consulta4.status == 200){
+						console.log("consulta4 ejecutada con exito");
+						console.log(consulta4.responseText);
+						respuesta4 = JSON.parse(consulta4.responseText);
+					}
+				}
+
+				consulta5 = new XMLHttpRequest();
+				consulta5.open("GET", direccion5);
+				consulta5.send();
+				consulta5.onload = function(){
+					if(consulta5.status == 200){
+						console.log("consulta5 ejecutada con exito");
+						console.log(consulta5.responseText);
+						respuesta5 = JSON.parse(consulta5.responseText);
+					}
+				}
+				respuestas.push(respuesta1, respuesta2, respuesta3, respuesta4, respuesta5);
+
+
+				var item = document.getElementById("combobox");
+				item.addEventListener("change",gestorCombo);
+
+				function gestorCombo(){
+					console.log(item.value);
+					console.log(item.options[item.selectedIndex].text);
+					console.log(item.selectedIndex);
+					var seleccionado = item.selectedIndex;
+					var elemento = document.getElementById("libro");
+					//elemento.innerHTML = "datos del libro "+JSON.stringify(respuesta1);
+					//valor = item.value;
+					var valor;
+					if(item.selectedIndex == 1){valor = respuesta1;}else if(item.selectedIndex == 2){valor = respuesta2;}else if(item.selectedIndex == 3){valor = respuesta3;}else if(item.selectedIndex == 4){valor = respuesta4;}else if(item.selectedIndex == 5){valor = respuesta5;}
+					elemento.innerHTML = "datos del libro "+JSON.stringify(valor);
+				}
+			}
+			//function mostrar(){
+			//	elemento = document.getElementById("libro");
+			//	elemento.innerHTML = "datos del libro "+JSON.stringify(valor);
+			//}
+			window.onload = inic;
+		</script>
+		<select id="combobox">
+			<option selected="selected">selecciona un libro</option>
+			<option class="_self">ISBN: 9781491920497 Blockchain: Blueprint for a New Economy</option>
+			<option class="_self">ISBN: 1491910399 R for Data Science</option>
+			<option class="_self">ISBN: 1491946008 Fluent Python</option>
+			<option class="_self">ISBN: 1491978236 Natural Language Processing with PyTorch</option>
+			<option class="_self">ISBN: 9781491906187 Data Algorithms</option>
+		</select>
+		<pre id="libro">
+		</pre>
+	</body>
+</html>
